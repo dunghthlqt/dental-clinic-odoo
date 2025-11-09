@@ -10,7 +10,7 @@ class DentalTreatment(models.Model):
     active = fields.Boolean('Active', default=True)
     medical_record_code = fields.Char('Mã hồ sơ', readonly=True, copy=False)
     patient_id = fields.Many2one('dental.patient', string='Bệnh nhân', required=True, tracking=True)
-    doctor_id = fields.Many2one('res.users', string='Bác sĩ phụ trách', tracking=True, domain=lambda self: [('groups_id', 'in', [self.env.ref('dental_crm.group_dental_doctor').id])])
+    doctor_id = fields.Many2one('res.users', string='Bác sĩ phụ trách', tracking=True, domain=lambda self: [('groups_id', 'in', [self.env.ref('dental_clinic_management.group_dental_doctor').id])])
     is_doctor = fields.Boolean('Is Doctor', compute='_compute_is_doctor')
     is_technician_or_doctor = fields.Boolean('Is Technician or Doctor', compute='_compute_is_technician_or_doctor')
     treatment_type = fields.Selection([
@@ -55,13 +55,13 @@ class DentalTreatment(models.Model):
 
     @api.depends_context('uid')
     def _compute_is_doctor(self):
-        doctor_group = self.env.ref('dental_crm.group_dental_doctor')
+        doctor_group = self.env.ref('dental_clinic_management.group_dental_doctor')
         for record in self:
             record.is_doctor = doctor_group in self.env.user.groups_id
 
     @api.depends_context('uid')
     def _compute_is_technician_or_doctor(self):
-        technician_group = self.env.ref('dental_crm.group_dental_technician')
-        doctor_group = self.env.ref('dental_crm.group_dental_doctor')
+        technician_group = self.env.ref('dental_clinic_management.group_dental_technician')
+        doctor_group = self.env.ref('dental_clinic_management.group_dental_doctor')
         for record in self:
             record.is_technician_or_doctor = (technician_group in self.env.user.groups_id) or (doctor_group in self.env.user.groups_id)

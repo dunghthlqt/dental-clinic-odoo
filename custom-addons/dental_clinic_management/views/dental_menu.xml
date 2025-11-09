@@ -2,27 +2,27 @@
 <odoo>
     <data>
         <!-- Main Menu -->
-        <menuitem id="menu_dental_crm_root" 
+        <menuitem id="menu_dental_clinic_management_root" 
                   name="Dental CRM" 
                   sequence="10"
-                  web_icon="dental_crm,static/description/icon.png"/>
+                  web_icon="dental_clinic_management,static/description/icon.png"/>
 
         <!-- Sub Menus -->
         <menuitem id="menu_dental_patient" 
                   name="Bệnh nhân" 
-                  parent="menu_dental_crm_root" 
+                  parent="menu_dental_clinic_management_root" 
                   action="action_dental_patient" 
                   sequence="10"/>
 
         <menuitem id="menu_dental_treatment" 
                   name="Hồ sơ điều trị" 
-                  parent="menu_dental_crm_root" 
+                  parent="menu_dental_clinic_management_root" 
                   action="action_dental_treatment" 
                   sequence="20"/>
 
         <menuitem id="menu_treatment_session" 
                   name="Buổi điều trị" 
-                  parent="menu_dental_crm_root" 
+                  parent="menu_dental_clinic_management_root" 
                   action="action_treatment_session" 
                   sequence="30"/>
     </data>

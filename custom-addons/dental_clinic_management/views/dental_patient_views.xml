@@ -24,7 +24,7 @@
             <field name="arch" type="xml">
                 <form>
                     <sheet>
-                        <div class="oe_button_box" name="button_box" groups="dental_crm.group_dental_doctor">
+                        <div class="oe_button_box" name="button_box" groups="dental_clinic_management.group_dental_doctor">
                             <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
                                 <field name="active" widget="boolean_button" options="{'terminology': 'archive'}"/>
                             </button>
@@ -43,13 +43,13 @@
                             </group>
                         </group>
                         <notebook>
-                            <page string="Thông tin y tế" groups="dental_crm.group_dental_technician">
+                            <page string="Thông tin y tế" groups="dental_clinic_management.group_dental_technician">
                                 <group>
                                     <field name="dental_condition" readonly="1"/>
                                     <field name="medical_notes" readonly="1"/>
                                 </group>
                             </page>
-                            <page string="Thông tin y tế" groups="dental_crm.group_dental_receptionist">
+                            <page string="Thông tin y tế" groups="dental_clinic_management.group_dental_receptionist">
                                 <group>
                                     <field name="dental_condition"/>
                                     <field name="medical_notes"/>
