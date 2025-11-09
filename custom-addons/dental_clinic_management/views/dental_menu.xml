@@ -3,8 +3,9 @@
     <data>
         <!-- Main Menu -->
         <menuitem id="menu_dental_clinic_management_root" 
-                  name="Dental CRM" 
+                  name="Clinic Management" 
                   sequence="10"
+                  groups="dental_clinic_management.group_dental_receptionist,dental_clinic_management.group_dental_technician,dental_clinic_management.group_dental_doctor"
                   web_icon="dental_clinic_management,static/description/icon.png"/>
 
         <!-- Sub Menus -->
@@ -12,18 +13,21 @@
                   name="Bệnh nhân" 
                   parent="menu_dental_clinic_management_root" 
                   action="action_dental_patient" 
+                  groups="dental_clinic_management.group_dental_receptionist,dental_clinic_management.group_dental_doctor"
                   sequence="10"/>
 
         <menuitem id="menu_dental_treatment" 
                   name="Hồ sơ điều trị" 
                   parent="menu_dental_clinic_management_root" 
                   action="action_dental_treatment" 
+                  groups="dental_clinic_management.group_dental_receptionist,dental_clinic_management.group_dental_technician,dental_clinic_management.group_dental_doctor"
                   sequence="20"/>
 
         <menuitem id="menu_treatment_session" 
                   name="Buổi điều trị" 
                   parent="menu_dental_clinic_management_root" 
                   action="action_treatment_session" 
+                  groups="dental_clinic_management.group_dental_technician,dental_clinic_management.group_dental_doctor"
                   sequence="30"/>
     </data>
 </odoo>

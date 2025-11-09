@@ -3,7 +3,7 @@
     <data>
         <!-- Category -->
         <record id="module_category_dental_clinic_management" model="ir.module.category">
-            <field name="name">Dental CRM</field>
+            <field name="name">Clinic Management</field>
             <field name="description">Quản lý phòng khám nha khoa</field>
             <field name="sequence">10</field>
         </record>
