@@ -2,8 +2,8 @@
 <odoo>
     <data>
         <!-- Category -->
-        <record id="module_category_dental_crm" model="ir.module.category">
-            <field name="name">Dental CRM</field>
+        <record id="module_category_dental_clinic_management" model="ir.module.category">
+            <field name="name">Clinic Management</field>
             <field name="description">Quản lý phòng khám nha khoa</field>
             <field name="sequence">10</field>
         </record>
@@ -11,21 +11,21 @@
         <!-- Group: Lễ tân (Receptionist) -->
         <record id="group_dental_receptionist" model="res.groups">
             <field name="name">Lễ tân</field>
-            <field name="category_id" ref="module_category_dental_crm"/>
+            <field name="category_id" ref="module_category_dental_clinic_management"/>
             <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
         <!-- Group: Kỹ thuật viên (Technician) -->
         <record id="group_dental_technician" model="res.groups">
             <field name="name">Kỹ thuật viên</field>
-            <field name="category_id" ref="module_category_dental_crm"/>
+            <field name="category_id" ref="module_category_dental_clinic_management"/>
             <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
         <!-- Group: Bác sĩ (Doctor) -->
         <record id="group_dental_doctor" model="res.groups">
             <field name="name">Bác sĩ</field>
-            <field name="category_id" ref="module_category_dental_crm"/>
+            <field name="category_id" ref="module_category_dental_clinic_management"/>
             <field name="implied_ids" eval="[(4, ref('group_dental_technician'))]"/>
         </record>
     </data>

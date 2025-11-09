@@ -28,7 +28,7 @@
                         <field name="status" widget="statusbar"/>
                     </header>
                     <sheet>
-                        <div class="oe_button_box" name="button_box" groups="dental_crm.group_dental_doctor">
+                        <div class="oe_button_box" name="button_box" groups="dental_clinic_management.group_dental_doctor">
                             <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
                                 <field name="active" widget="boolean_button" options="{'terminology': 'archive'}"/>
                             </button>
@@ -38,7 +38,7 @@
                                 <field name="medical_record_code" readonly="1"/>
                                 <field name="name"/>
                                 <field name="patient_id"/>
-                                <field name="doctor_id" groups="dental_crm.group_dental_receptionist,dental_crm.group_dental_doctor"/>
+                                <field name="doctor_id" groups="dental_clinic_management.group_dental_receptionist,dental_clinic_management.group_dental_doctor"/>
                             </group>
                             <group>
                                 <field name="is_doctor" invisible="1"/>
@@ -102,10 +102,10 @@
                                     </form>
                                 </field>
                             </page>
-                            <page string="Ghi chú" groups="dental_crm.group_dental_technician">
+                            <page string="Ghi chú" groups="dental_clinic_management.group_dental_technician">
                                 <field name="notes" readonly="1"/>
                             </page>
-                            <page string="Ghi chú" groups="dental_crm.group_dental_receptionist,dental_crm.group_dental_doctor">
+                            <page string="Ghi chú" groups="dental_clinic_management.group_dental_receptionist,dental_clinic_management.group_dental_doctor">
                                 <field name="notes"/>
                             </page>
                         </notebook>
