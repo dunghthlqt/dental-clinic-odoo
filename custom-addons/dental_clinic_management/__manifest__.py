@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'Dental CRM',
+    'name': 'Clinic Management',
     'version': '1.0',
-    'summary': 'Quản lý phòng khám nha khoa',
+    'summary': 'Hệ thống quản lý phòng khám nha khoa - Clinic Management System',
     'author': 'Your Company',
     'category': 'Healthcare',
     'depends': ['base', 'mail'],
