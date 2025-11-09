@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Tree View -->
+        <record id="view_dental_patient_tree" model="ir.ui.view">
+            <field name="name">dental.patient.tree</field>
+            <field name="model">dental.patient</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="customer_code"/>
+                    <field name="name"/>
+                    <field name="phone"/>
+                    <field name="birth_date"/>
+                    <field name="gender"/>
+                    <field name="treatment_count"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_dental_patient_form" model="ir.ui.view">
+            <field name="name">dental.patient.form</field>
+            <field name="model">dental.patient</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box" groups="dental_crm.group_dental_doctor">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options="{'terminology': 'archive'}"/>
+                            </button>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="customer_code" readonly="1"/>
+                                <field name="name"/>
+                                <field name="birth_date"/>
+                                <field name="gender"/>
+                            </group>
+                            <group>
+                                <field name="phone"/>
+                                <field name="email"/>
+                                <field name="address"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Thông tin y tế" groups="dental_crm.group_dental_technician">
+                                <group>
+                                    <field name="dental_condition" readonly="1"/>
+                                    <field name="medical_notes" readonly="1"/>
+                                </group>
+                            </page>
+                            <page string="Thông tin y tế" groups="dental_crm.group_dental_receptionist">
+                                <group>
+                                    <field name="dental_condition"/>
+                                    <field name="medical_notes"/>
+                                </group>
+                            </page>
+                            <page string="Hồ sơ điều trị">
+                                <field name="treatment_ids" readonly="1">
+                                    <tree>
+                                        <field name="medical_record_code"/>
+                                        <field name="name"/>
+                                        <field name="treatment_type"/>
+                                        <field name="status"/>
+                                        <field name="start_date"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_dental_patient" model="ir.actions.act_window">
+            <field name="name">Bệnh nhân</field>
+            <field name="res_model">dental.patient</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

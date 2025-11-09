@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Tree View -->
+        <record id="view_treatment_session_tree" model="ir.ui.view">
+            <field name="name">treatment.session.tree</field>
+            <field name="model">treatment.session</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="session_date"/>
+                    <field name="patient_id"/>
+                    <field name="treatment_id"/>
+                    <field name="doctor_ids" widget="many2many_tags"/>
+                    <field name="status"/>
+                    <field name="next_appointment_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_treatment_session_form" model="ir.ui.view">
+            <field name="name">treatment.session.form</field>
+            <field name="model">treatment.session</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box" groups="dental_crm.group_dental_doctor">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options="{'terminology': 'archive'}"/>
+                            </button>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="treatment_id"/>
+                                <field name="patient_id"/>
+                                <field name="session_date"/>
+                            </group>
+                            <group>
+                                <field name="doctor_ids" widget="many2many_tags"/>
+                                <field name="status"/>
+                                <field name="next_appointment"/>
+                                <field name="next_appointment_date"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Ghi chú điều trị" groups="dental_crm.group_dental_receptionist">
+                                <group>
+                                    <field name="notes" nolabel="1" readonly="1"/>
+                                    <field name="notes_en" nolabel="1" readonly="1"/>
+                                </group>
+                            </page>
+                            <page string="Ghi chú điều trị" groups="dental_crm.group_dental_technician">
+                                <group>
+                                    <field name="notes" nolabel="1"/>
+                                    <field name="notes_en" nolabel="1"/>
+                                </group>
+                            </page>
+                            <page string="Vật tư sử dụng" groups="dental_crm.group_dental_receptionist">
+                                <field name="supply_ids" readonly="1">
+                                    <tree editable="bottom">
+                                        <field name="supply_code"/>
+                                        <field name="name"/>
+                                        <field name="quantity"/>
+                                        <field name="notes"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Vật tư sử dụng" groups="dental_crm.group_dental_technician">
+                                <field name="supply_ids">
+                                    <tree editable="bottom">
+                                        <field name="supply_code"/>
+                                        <field name="name"/>
+                                        <field name="quantity"/>
+                                        <field name="notes"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_treatment_session" model="ir.actions.act_window">
+            <field name="name">Buổi điều trị</field>
+            <field name="res_model">treatment.session</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Tree View -->
+        <record id="view_dental_treatment_tree" model="ir.ui.view">
+            <field name="name">dental.treatment.tree</field>
+            <field name="model">dental.treatment</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="medical_record_code"/>
+                    <field name="name"/>
+                    <field name="patient_id"/>
+                    <field name="treatment_type"/>
+                    <field name="status"/>
+                    <field name="payment_status"/>
+                    <field name="start_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_dental_treatment_form" model="ir.ui.view">
+            <field name="name">dental.treatment.form</field>
+            <field name="model">dental.treatment</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="status" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box" groups="dental_crm.group_dental_doctor">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options="{'terminology': 'archive'}"/>
+                            </button>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="medical_record_code" readonly="1"/>
+                                <field name="name"/>
+                                <field name="patient_id"/>
+                                <field name="doctor_id" groups="dental_crm.group_dental_receptionist,dental_crm.group_dental_doctor"/>
+                            </group>
+                            <group>
+                                <field name="is_doctor" invisible="1"/>
+                                <field name="is_technician_or_doctor" invisible="1"/>
+                                <field name="treatment_type" readonly="not is_doctor"/>
+                                <field name="payment_status" readonly="1"/>
+                                <field name="start_date" readonly="not is_doctor"/>
+                                <field name="end_date" readonly="not is_doctor"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="total_cost" readonly="not is_doctor"/>
+                                <field name="paid_amount" readonly="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Buổi điều trị">
+                                <field name="session_ids" readonly="not is_technician_or_doctor">
+                                    <tree string="Buổi điều trị" create="1" edit="1" create_text="Thêm buổi điều trị">
+                                        <field name="session_date"/>
+                                        <field name="doctor_ids" widget="many2many_tags"/>
+                                        <field name="notes" string="Ghi chú điều trị" optional="show"/>
+                                        <field name="notes_en" string="Ghi chú (EN)" optional="hide"/>
+                                        <field name="status"/>
+                                        <field name="next_appointment"/>
+                                        <field name="next_appointment_date"/>
+                                    </tree>
+                                    <form string="Buổi điều trị">
+                                        <sheet>
+                                            <group>
+                                                <group>
+                                                    <field name="session_date"/>
+                                                    <field name="status"/>
+                                                </group>
+                                                <group>
+                                                    <field name="doctor_ids" widget="many2many_tags"/>
+                                                    <field name="next_appointment"/>
+                                                    <field name="next_appointment_date"/>
+                                                </group>
+                                            </group>
+                                            <notebook>
+                                                <page string="Ghi chú điều trị">
+                                                    <group>
+                                                        <field name="notes" nolabel="1" placeholder="Ghi chú bằng tiếng Việt..."/>
+                                                        <field name="notes_en" nolabel="1" placeholder="Notes in English..."/>
+                                                    </group>
+                                                </page>
+                                                <page string="Vật tư sử dụng">
+                                                    <field name="supply_ids">
+                                                        <tree editable="bottom" create_text="Thêm vật tư">
+                                                            <field name="supply_code"/>
+                                                            <field name="name"/>
+                                                            <field name="quantity"/>
+                                                            <field name="notes"/>
+                                                        </tree>
+                                                    </field>
+                                                </page>
+                                            </notebook>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
+                            <page string="Ghi chú" groups="dental_crm.group_dental_technician">
+                                <field name="notes" readonly="1"/>
+                            </page>
+                            <page string="Ghi chú" groups="dental_crm.group_dental_receptionist,dental_crm.group_dental_doctor">
+                                <field name="notes"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_dental_treatment" model="ir.actions.act_window">
+            <field name="name">Hồ sơ điều trị</field>
+            <field name="res_model">dental.treatment</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>
