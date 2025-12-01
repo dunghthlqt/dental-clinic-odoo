@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Inherit Calendar Event Form View -->
+        <record id="view_calendar_event_form_dental" model="ir.ui.view">
+            <field name="name">calendar.event.form.dental</field>
+            <field name="model">calendar.event</field>
+            <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="appointment_type"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_ids']" position="after">
+                    <field name="lead_id" readonly="1"/>
+                    <field name="treatment_session_id" readonly="1"/>
+                    <field name="patient_id" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
+

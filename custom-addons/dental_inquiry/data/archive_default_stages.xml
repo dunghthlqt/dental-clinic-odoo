@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- Archive the "Đã liên hệ" stage if it exists in database -->
+        <!-- This stage has been removed from the workflow -->
+        <!-- Using noupdate="0" to force update even if record exists -->
+        <record id="crm_team_dental_inquiry_stage_contacted" model="crm.stage">
+            <field name="fold" eval="True"/>
+            <field name="name">Đã liên hệ (Đã xóa)</field>
+        </record>
+    </data>
+</odoo>

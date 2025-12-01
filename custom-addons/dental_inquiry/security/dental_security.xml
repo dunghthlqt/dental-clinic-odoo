@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- Category -->
+        <record id="module_category_dental_inquiry" model="ir.module.category">
+            <field name="name">Patient Inquiry Management</field>
+            <field name="description">Quản lý inquiry và chuyển đổi thành bệnh nhân</field>
+            <field name="sequence">5</field>
+        </record>
+
+        <!-- Note: We reuse groups from dental_clinic_management if available -->
+        <!-- If dental_clinic_management is not installed, create new groups -->
+        
+        <!-- Group: Receptionist (Reuse from clinic or create new) -->
+        <record id="group_dental_inquiry_receptionist" model="res.groups">
+            <field name="name">Receptionist (Inquiry)</field>
+            <field name="category_id" ref="module_category_dental_inquiry"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="comment">Lễ tân có thể tạo và quản lý inquiries</field>
+        </record>
+
+        <!-- Group: Dentist (Reuse from clinic or create new) -->
+        <record id="group_dental_inquiry_dentist" model="res.groups">
+            <field name="name">Dentist (Inquiry)</field>
+            <field name="category_id" ref="module_category_dental_inquiry"/>
+            <field name="implied_ids" eval="[(4, ref('group_dental_inquiry_receptionist'))]"/>
+            <field name="comment">Bác sĩ có thể tư vấn và convert inquiries</field>
+        </record>
+
+        <!-- Group: Manager -->
+        <record id="group_dental_inquiry_manager" model="res.groups">
+            <field name="name">Manager (Inquiry)</field>
+            <field name="category_id" ref="module_category_dental_inquiry"/>
+            <field name="implied_ids" eval="[(4, ref('group_dental_inquiry_dentist'))]"/>
+            <field name="comment">Manager có đầy đủ quyền quản lý inquiries</field>
+        </record>
+    </data>
+</odoo>
+
