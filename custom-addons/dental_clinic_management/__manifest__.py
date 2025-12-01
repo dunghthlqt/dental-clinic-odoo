@@ -9,6 +9,7 @@
     'data': [
         'security/dental_security.xml',
         'security/ir.model.access.csv',
+        'data/dental_sequences.xml',
         'views/dental_patient_views.xml',
         'views/dental_treatment_views.xml',
         'views/treatment_session_views.xml',

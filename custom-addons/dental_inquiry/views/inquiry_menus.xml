@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Main Menu: Patient Inquiries -->
+        <menuitem id="menu_dental_inquiries_root" 
+                  name="Inquiry Bệnh nhân" 
+                  sequence="5"
+                  groups="group_dental_inquiry_receptionist,group_dental_inquiry_dentist,group_dental_inquiry_manager"/>
+
+        <!-- Action: All Inquiries -->
+        <!-- Filter to only show inquiries from dental team to ensure only 5 stages show in kanban -->
+        <record id="action_dental_inquiries" model="ir.actions.act_window">
+            <field name="name">Inquiries</field>
+            <field name="res_model">crm.lead</field>
+            <field name="view_mode">kanban,tree,form,calendar,graph,pivot</field>
+            <field name="domain">[('type', '=', 'lead'), '|', ('team_id', '=', False), ('team_id.name', '=', 'Đội Inquiry Nha khoa')]</field>
+            <field name="context">{
+                'default_type': 'lead',
+                'search_default_open': 1,
+            }</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Tạo inquiry đầu tiên của bạn!
+                </p>
+                <p>
+                    Theo dõi inquiries từ lần liên hệ đầu tiên đến khi chuyển đổi thành bệnh nhân.
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_dental_inquiries" 
+                  name="Tất cả Inquiries" 
+                  parent="menu_dental_inquiries_root" 
+                  action="action_dental_inquiries"
+                  sequence="10"/>
+
+        <!-- Action: Consultation Calendar -->
+        <record id="action_consultation_calendar" model="ir.actions.act_window">
+            <field name="name">Lịch tư vấn</field>
+            <field name="res_model">calendar.event</field>
+            <field name="view_mode">calendar,tree,form</field>
+            <field name="domain">[('appointment_type', '=', 'consultation')]</field>
+            <field name="context">{'default_appointment_type': 'consultation'}</field>
+        </record>
+
+        <menuitem id="menu_consultation_calendar" 
+                  name="Lịch tư vấn" 
+                  parent="menu_dental_inquiries_root" 
+                  action="action_consultation_calendar"
+                  sequence="20"/>
+    </data>
+</odoo>
+

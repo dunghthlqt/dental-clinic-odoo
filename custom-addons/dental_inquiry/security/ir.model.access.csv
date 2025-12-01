@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_crm_lead_receptionist,crm.lead.receptionist,crm.model_crm_lead,group_dental_inquiry_receptionist,1,1,1,0
+access_crm_lead_dentist,crm.lead.dentist,crm.model_crm_lead,group_dental_inquiry_dentist,1,1,1,0
+access_crm_lead_manager,crm.lead.manager,crm.model_crm_lead,group_dental_inquiry_manager,1,1,1,1
+access_calendar_event_receptionist,calendar.event.receptionist,calendar.model_calendar_event,group_dental_inquiry_receptionist,1,1,1,0
+access_calendar_event_dentist,calendar.event.dentist,calendar.model_calendar_event,group_dental_inquiry_dentist,1,1,1,0
+access_calendar_event_manager,calendar.event.manager,calendar.model_calendar_event,group_dental_inquiry_manager,1,1,1,1
+

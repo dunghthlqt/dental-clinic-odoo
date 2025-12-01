@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- This file can be used to update existing leads if needed -->
+        <!-- Use wizard instead for better control -->
+    </data>
+</odoo>
+

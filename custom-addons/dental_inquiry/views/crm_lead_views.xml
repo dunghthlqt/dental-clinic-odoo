@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Inherit CRM Lead Form View -->
+        <record id="view_crm_lead_form_dental" model="ir.ui.view">
+            <field name="name">crm.lead.form.dental</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                
+                <!-- Add buttons in header -->
+                <xpath expr="//header" position="inside">
+                    <button name="action_schedule_consultation" 
+                            string="Đặt lịch tư vấn" 
+                            type="object" 
+                            class="btn-primary"
+                            invisible="consultation_event_id or type != 'lead'"/>
+                    <button name="action_convert_to_patient" 
+                            string="Chuyển đổi thành bệnh nhân" 
+                            type="object" 
+                            class="btn-success"
+                            invisible="stage_id.is_won or not contact_name"/>
+                </xpath>
+                
+                <!-- Hide unnecessary fields: Expected Revenue, Probability, Rating -->
+                <!-- Hide label and field for expected_revenue -->
+                <xpath expr="//label[@for='expected_revenue']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='expected_revenue']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                
+                <!-- Hide label and field for probability -->
+                <xpath expr="//label[@for='probability']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='probability']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                
+                <!-- Note: rating_ids field does not exist in Odoo 17.0 CRM form view -->
+                <!-- So we don't need to hide it -->
+                
+                <!-- Change label "Cơ hội" (Opportunity) to "Thông tin" -->
+                <!-- The name field uses widget="text" in h1, so we change the placeholder -->
+                <xpath expr="//field[@name='name'][@widget='text']" position="attributes">
+                    <attribute name="placeholder">VD: Thông tin inquiry, nguồn liên hệ...</attribute>
+                </xpath>
+                
+                <!-- Hide "Tổ chức/Liên hệ" (partner_id) field -->
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                
+                <!-- Show "Tên khách hàng" (contact_name) instead -->
+                <!-- Replace contact_name label and make it more prominent -->
+                <xpath expr="//field[@name='contact_name']" position="attributes">
+                    <attribute name="string">Tên khách hàng</attribute>
+                    <attribute name="placeholder">VD: Nguyễn Văn A</attribute>
+                </xpath>
+                
+                <!-- Add Facebook field after email/phone -->
+                <xpath expr="//field[@name='phone']" position="after">
+                    <field name="facebook_url" placeholder="VD: https://facebook.com/username hoặc link tin nhắn"/>
+                </xpath>
+                
+                <!-- Add Address field after Facebook -->
+                <xpath expr="//field[@name='facebook_url']" position="after">
+                    <field name="street" string="Địa chỉ" placeholder="VD: Số nhà, tên đường, phường/xã"/>
+                </xpath>
+                
+                <!-- Add Gender and Date of Birth after contact_name -->
+                <xpath expr="//field[@name='contact_name']" position="after">
+                    <field name="gender"/>
+                    <field name="date_of_birth"/>
+                </xpath>
+                
+                <!-- Add Dental Information tab -->
+                <xpath expr="//notebook" position="inside">
+                    <page string="Thông tin nha khoa">
+                        <group>
+                            <group>
+                                <field name="dental_issue" placeholder="Mô tả vấn đề răng miệng..."/>
+                                <field name="treatment_interest"/>
+                                <field name="urgency_level"/>
+                            </group>
+                            <group>
+                                <field name="consultation_date"/>
+                                <field name="consultation_event_id" readonly="1"/>
+                                <field name="estimated_treatment_value"/>
+                                <field name="consultation_notes" placeholder="Ghi chú sau khi tư vấn..."/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="converted_patient_id" readonly="1"/>
+                                <field name="converted_dental_patient_id" readonly="1"/>
+                                <field name="treatment_case_id" readonly="1"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+                
+                <!-- Store computed field -->
+                <xpath expr="//sheet" position="before">
+                    <field name="is_high_value" invisible="1"/>
+                </xpath>
+                
+            </field>
+        </record>
+
+        <!-- Inherit CRM Lead Tree View - Add dental fields -->
+        <!-- Note: Using crm_case_tree_view_leads for Odoo 17.0 compatibility -->
+        <!-- Tree view doesn't have expected_revenue, so we add after team_id -->
+        <record id="view_crm_lead_tree_dental" model="ir.ui.view">
+            <field name="name">crm.lead.tree.dental</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_tree_view_leads"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='team_id']" position="after">
+                    <field name="treatment_interest" optional="show"/>
+                    <field name="urgency_level" optional="show"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Inherit CRM Lead Kanban View - Customize card display -->
+        <!-- Note: Using crm_case_kanban_view_leads for Odoo 17.0 compatibility -->
+        <record id="view_crm_lead_kanban_dental" model="ir.ui.view">
+            <field name="name">crm.lead.kanban.dental</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+            <field name="arch" type="xml">
+                <!-- Add dental fields to kanban (must be in field list for template to use them) -->
+                <xpath expr="//field[@name='expected_revenue']" position="after">
+                    <field name="contact_name"/>
+                    <field name="phone"/>
+                    <field name="dental_issue"/>
+                    <field name="treatment_interest"/>
+                    <field name="urgency_level"/>
+                </xpath>
+                
+                <!-- Hide rating/priority stars and activity deadline clock -->
+                <xpath expr="//field[@name='priority']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='activity_date_deadline']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='kanban_state']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                
+                <!-- Customize kanban card template to show only contact_name, phone, dental_issue -->
+                <!-- Note: The kanban-box template uses <div class="o_kanban_record_subtitle"> not <span> -->
+                
+                <!-- Step 1: Replace subtitle div content with phone -->
+                <xpath expr="//templates/t[@t-name='kanban-box']//div[@class='o_kanban_record_subtitle']" position="replace">
+                    <div class="o_kanban_record_subtitle">
+                        <field name="phone"/>
+                    </div>
+                </xpath>
+                
+                <!-- Step 2: Replace name field with contact_name in title -->
+                <xpath expr="//templates/t[@t-name='kanban-box']//field[@name='name']" position="replace">
+                    <field name="contact_name"/>
+                </xpath>
+                
+                <!-- Step 3: Add dental_issue after the subtitle div -->
+                <xpath expr="//templates/t[@t-name='kanban-box']//div[@class='o_kanban_record_subtitle']" position="after">
+                    <div class="mt-2" style="word-wrap: break-word; max-height: 100px; overflow: hidden;">
+                        <field name="dental_issue" widget="text"/>
+                    </div>
+                </xpath>
+                
+                <!-- Step 4: Hide tag_ids div and bottom section -->
+                <xpath expr="//templates/t[@t-name='kanban-box']//div[field[@name='tag_ids']]" position="replace"/>
+                <xpath expr="//templates/t[@t-name='kanban-box']//div[@class='o_kanban_record_bottom']" position="replace"/>
+            </field>
+        </record>
+        
+        <!-- Inherit Quick Create Form for Leads (used when clicking "Mới" button) -->
+        <record id="view_quick_create_lead_form_dental" model="ir.ui.view">
+            <field name="name">crm.lead.quick_create.dental</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.quick_create_opportunity_form"/>
+            <field name="arch" type="xml">
+                <!-- Hide "Tổ chức/Liên hệ" (partner_id) field -->
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                
+                <!-- Add "Tên khách hàng" (contact_name) field before "name" field -->
+                <!-- Note: contact_name is not in quick create form by default, so we add it -->
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="contact_name" string="Tên khách hàng" placeholder="VD: Nguyễn Văn A"/>
+                </xpath>
+                
+                <!-- Change "name" field placeholder -->
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="placeholder">VD: Thông tin inquiry, nguồn liên hệ...</attribute>
+                </xpath>
+                
+                <!-- Hide expected_revenue and priority -->
+                <xpath expr="//label[@for='expected_revenue']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='expected_revenue']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='priority']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                
+                <!-- Add Facebook field after phone -->
+                <xpath expr="//field[@name='phone']" position="after">
+                    <field name="facebook_url" string="Facebook" placeholder="VD: https://facebook.com/username hoặc link tin nhắn"/>
+                </xpath>
+                
+                <!-- Add Address field after Facebook in quick create -->
+                <xpath expr="//field[@name='facebook_url']" position="after">
+                    <field name="street" string="Địa chỉ" placeholder="VD: Số nhà, tên đường, phường/xã"/>
+                </xpath>
+                
+                <!-- Add Gender and Date of Birth after contact_name in quick create -->
+                <xpath expr="//field[@name='contact_name']" position="after">
+                    <field name="gender" string="Giới tính"/>
+                    <field name="date_of_birth" string="Ngày sinh"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
+

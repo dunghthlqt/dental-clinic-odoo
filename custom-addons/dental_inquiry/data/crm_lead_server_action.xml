@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Server Action: Assign Dental Team to Selected Leads -->
+        <record id="action_assign_dental_team" model="ir.actions.server">
+            <field name="name">Gán vào Team Inquiry Nha khoa</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="binding_model_id" ref="crm.model_crm_lead"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">
+# Find dental inquiry team
+dental_team = env['crm.team'].search([('name', '=', 'Đội Inquiry Nha khoa')], limit=1)
+
+if dental_team:
+    # Assign team to selected records
+    records.write({'team_id': dental_team.id})
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': 'Thành công',
+            'message': f'Đã gán {len(records)} inquiries vào team "Đội Inquiry Nha khoa".',
+            'type': 'success',
+            'sticky': False,
+        }
+    }
+else:
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': 'Lỗi',
+            'message': 'Không tìm thấy team "Đội Inquiry Nha khoa".',
+            'type': 'danger',
+            'sticky': False,
+        }
+    }
+            </field>
+        </record>
+    </data>
+</odoo>
+

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Inherit Partner Form View - Add inquiry link -->
+        <record id="view_partner_form_dental" model="ir.ui.view">
+            <field name="name">res.partner.form.dental</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Inquiries" groups="group_dental_inquiry_receptionist,group_dental_inquiry_dentist">
+                        <field name="inquiry_ids">
+                            <tree>
+                                <field name="name"/>
+                                <field name="treatment_interest"/>
+                                <field name="stage_id"/>
+                                <field name="estimated_treatment_value"/>
+                                <field name="user_id"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
+

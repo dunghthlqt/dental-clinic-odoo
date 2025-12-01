@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- Note: Stages are now created in crm_team_data.xml with team assignment -->
+        <!-- This file is kept for backward compatibility but stages should be team-specific -->
+    </data>
+</odoo>
+
