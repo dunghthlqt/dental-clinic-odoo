@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menu in HR app -->
+    <menuitem id="menu_dental_hr_root"
+              name="Nha khoa"
+              parent="hr.menu_hr_root"
+              sequence="100"
+              groups="hr.group_hr_user"/>
+
+    <!-- Roles Menu -->
+    <menuitem id="menu_dental_roles"
+              name="Vai trò"
+              parent="menu_dental_hr_root"
+              action="action_dental_role"
+              sequence="10"
+              groups="hr.group_hr_user"/>
+
+    <!-- Bonus Menu -->
+    <menuitem id="menu_dental_bonus"
+              name="Thưởng"
+              parent="menu_dental_hr_root"
+              action="action_dental_bonus"
+              sequence="20"
+              groups="hr.group_hr_user"/>
+
+    <!-- Salary Menu -->
+    <menuitem id="menu_dental_salary"
+              name="Lương"
+              parent="menu_dental_hr_root"
+              action="action_dental_salary"
+              sequence="30"
+              groups="hr.group_hr_user"/>
+</odoo>
+

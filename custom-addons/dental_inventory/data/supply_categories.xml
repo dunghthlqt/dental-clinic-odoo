@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Supply Categories -->
+        <record id="supply_category_filling_materials" model="dental.supply.category">
+            <field name="name">Vật liệu trám</field>
+            <field name="code">FILLING</field>
+        </record>
+
+        <record id="supply_category_filling_composite" model="dental.supply.category">
+            <field name="name">Composite</field>
+            <field name="code">COMPOSITE</field>
+            <field name="parent_id" ref="supply_category_filling_materials"/>
+        </record>
+
+        <record id="supply_category_filling_amalgam" model="dental.supply.category">
+            <field name="name">Amalgam</field>
+            <field name="code">AMALGAM</field>
+            <field name="parent_id" ref="supply_category_filling_materials"/>
+        </record>
+
+        <record id="supply_category_filling_gic" model="dental.supply.category">
+            <field name="name">GIC</field>
+            <field name="code">GIC</field>
+            <field name="parent_id" ref="supply_category_filling_materials"/>
+        </record>
+
+        <record id="supply_category_instruments" model="dental.supply.category">
+            <field name="name">Dụng cụ</field>
+            <field name="code">INSTRUMENTS</field>
+        </record>
+
+        <record id="supply_category_instruments_drill" model="dental.supply.category">
+            <field name="name">Khoan</field>
+            <field name="code">DRILL</field>
+            <field name="parent_id" ref="supply_category_instruments"/>
+        </record>
+
+        <record id="supply_category_instruments_forceps" model="dental.supply.category">
+            <field name="name">Kìm</field>
+            <field name="code">FORCEPS</field>
+            <field name="parent_id" ref="supply_category_instruments"/>
+        </record>
+
+        <record id="supply_category_instruments_clamp" model="dental.supply.category">
+            <field name="name">Kẹp</field>
+            <field name="code">CLAMP</field>
+            <field name="parent_id" ref="supply_category_instruments"/>
+        </record>
+
+        <record id="supply_category_medications" model="dental.supply.category">
+            <field name="name">Thuốc</field>
+            <field name="code">MEDICATIONS</field>
+        </record>
+
+        <record id="supply_category_medications_anesthesia" model="dental.supply.category">
+            <field name="name">Gây tê</field>
+            <field name="code">ANESTHESIA</field>
+            <field name="parent_id" ref="supply_category_medications"/>
+        </record>
+
+        <record id="supply_category_medications_antibiotics" model="dental.supply.category">
+            <field name="name">Kháng sinh</field>
+            <field name="code">ANTIBIOTICS</field>
+            <field name="parent_id" ref="supply_category_medications"/>
+        </record>
+
+        <record id="supply_category_orthodontics" model="dental.supply.category">
+            <field name="name">Vật liệu niềng răng</field>
+            <field name="code">ORTHODONTICS</field>
+        </record>
+
+        <record id="supply_category_orthodontics_brackets" model="dental.supply.category">
+            <field name="name">Mắc cài</field>
+            <field name="code">BRACKETS</field>
+            <field name="parent_id" ref="supply_category_orthodontics"/>
+        </record>
+
+        <record id="supply_category_orthodontics_wire" model="dental.supply.category">
+            <field name="name">Dây cung</field>
+            <field name="code">WIRE</field>
+            <field name="parent_id" ref="supply_category_orthodontics"/>
+        </record>
+
+        <record id="supply_category_prosthetics" model="dental.supply.category">
+            <field name="name">Vật liệu phục hình</field>
+            <field name="code">PROSTHETICS</field>
+        </record>
+    </data>
+</odoo>
+

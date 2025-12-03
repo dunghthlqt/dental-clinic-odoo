@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extend Dental Treatment Form View -->
+    <record id="view_dental_treatment_form_accounting" model="ir.ui.view">
+        <field name="name">dental.treatment.form.accounting</field>
+        <field name="model">dental.treatment</field>
+        <field name="inherit_id" ref="dental_clinic_management.view_dental_treatment_form"/>
+        <field name="arch" type="xml">
+            <!-- Add Accounting tab -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Kế toán" name="accounting">
+                    <field name="payment_plan_id" invisible="1"/>
+                    <group>
+                        <group string="Thông tin thanh toán">
+                            <field name="payment_policy" readonly="1"/>
+                            <field name="total_cost" string="Tổng chi phí điều trị" readonly="1"/>
+                            <field name="supply_cost" string="Chi phí vật tư" readonly="1"/>
+                            <field name="paid_amount" string="Đã thanh toán" readonly="1"/>
+                            <field name="remaining_amount" string="Còn lại" readonly="1"/>
+                        </group>
+                        <group string="Lợi nhuận">
+                            <field name="revenue" string="Doanh thu" readonly="1"/>
+                            <field name="profit" string="Lợi nhuận" readonly="1"/>
+                        </group>
+                    </group>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_payment_wizard" 
+                                string="Thanh toán" 
+                                type="object" 
+                                class="oe_highlight"
+                                icon="fa-money"
+                                invisible="remaining_amount &lt;= 0"
+                                groups="dental_clinic_management.group_dental_receptionist,dental_accounting.group_dental_accountant"/>
+                        <button name="action_create_payment_plan"
+                                string="Tạo Payment Plan"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-calendar"
+                                invisible="payment_policy != 'installment' or payment_plan_id"
+                                groups="dental_accounting.group_dental_accountant"/>
+                    </div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Extend Dental Treatment Tree View -->
+    <record id="view_dental_treatment_tree_accounting" model="ir.ui.view">
+        <field name="name">dental.treatment.tree.accounting</field>
+        <field name="model">dental.treatment</field>
+        <field name="inherit_id" ref="dental_clinic_management.view_dental_treatment_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_status']" position="after">
+                <field name="payment_policy"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Action for Accountant to access Dental Treatments -->
+    <record id="action_dental_treatment_accounting" model="ir.actions.act_window">
+        <field name="name">Hồ sơ điều trị</field>
+        <field name="res_model">dental.treatment</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Chưa có hồ sơ điều trị nào
+            </p>
+            <p>
+                Hồ sơ điều trị được tạo bởi nhân viên phòng khám. 
+                Kế toán có thể xem thông tin kế toán liên quan trong tab "Kế toán".
+            </p>
+        </field>
+    </record>
+</odoo>
+

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Extend Product Form View -->
+        <record id="view_product_form_dental_supply" model="ir.ui.view">
+            <field name="name">product.product.form.dental.supply</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <!-- Add is_dental_supply field to view context (invisible) so it can be used in modifiers -->
+                <xpath expr="//sheet" position="inside">
+                    <field name="is_dental_supply" invisible="1"/>
+                </xpath>
+                
+                <!-- Hide sale_ok and purchase_ok for dental supplies -->
+                <xpath expr="//field[@name='sale_ok']" position="attributes">
+                    <attribute name="invisible">is_dental_supply</attribute>
+                </xpath>
+                <xpath expr="//field[@name='purchase_ok']" position="attributes">
+                    <attribute name="invisible">is_dental_supply</attribute>
+                </xpath>
+                
+                <!-- Hide list_price (selling price) for dental supplies -->
+                <xpath expr="//field[@name='list_price']" position="attributes">
+                    <attribute name="invisible">is_dental_supply</attribute>
+                </xpath>
+                
+                <!-- Add Dental Supply tab -->
+                <xpath expr="//notebook" position="inside">
+                    <page string="Vật tư nha khoa" name="dental_supply" groups="base.group_user">
+                        <group>
+                            <group>
+                                <field name="is_dental_supply"/>
+                                <field name="supply_category_id" 
+                                       domain="[]"
+                                       options="{'no_create': True}"
+                                       required="is_dental_supply"/>
+                                <field name="min_stock_level" invisible="not is_dental_supply"/>
+                                <field name="tracking" 
+                                       invisible="not is_dental_supply"
+                                       help="Vật tư nha khoa nên set Tracking = 'No Tracking' để chỉ quản lý theo số lượng"/>
+                            </group>
+                            <group>
+                                <field name="is_low_stock" readonly="1" invisible="not is_dental_supply"/>
+                                <field name="qty_available" readonly="1" invisible="not is_dental_supply"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Extend Product Tree View -->
+        <record id="view_product_tree_dental_supply" model="ir.ui.view">
+            <field name="name">product.product.tree.dental.supply</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='type']" position="after">
+                    <field name="is_dental_supply" optional="hide"/>
+                    <field name="supply_category_id" optional="hide"/>
+                    <field name="min_stock_level" optional="hide"/>
+                    <!-- Note: is_low_stock removed from tree view because it's a stored computed field that may not exist in DB yet -->
+                    <!-- It's still available in form view -->
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Extend Product Search View -->
+        <record id="view_product_search_dental_supply" model="ir.ui.view">
+            <field name="name">product.product.search.dental.supply</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_search_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='filter_to_sell']" position="after">
+                    <separator/>
+                    <filter string="Vật tư nha khoa" name="dental_supplies" domain="[('is_dental_supply', '=', True)]"/>
+                    <!-- Note: Filter "Tồn kho thấp" removed because is_low_stock is a computed field 
+                         that depends on qty_available (also computed). Use menu "Cảnh báo tồn kho thấp" instead. -->
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Dental Supplies Action (Filtered) -->
+        <record id="action_dental_supplies" model="ir.actions.act_window">
+            <field name="name">Vật tư nha khoa</field>
+            <field name="res_model">product.product</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="domain">[('is_dental_supply', '=', True)]</field>
+            <field name="context">{'default_is_dental_supply': True, 'search_default_dental_supplies': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Tạo vật tư nha khoa mới
+                </p>
+                <p>
+                    Vật tư nha khoa là các sản phẩm tiêu hao được sử dụng trong quá trình điều trị.
+                    Khi tạo vật tư mới, hệ thống sẽ tự động set type = 'product' (Storable) để có thể theo dõi tồn kho.
+                    Vật tư được quản lý theo số lượng, không cần tracking theo lot.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>
+

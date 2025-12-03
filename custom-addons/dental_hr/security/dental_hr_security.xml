@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Category -->
+        <record id="module_category_dental_hr" model="ir.module.category">
+            <field name="name">Dental HR</field>
+            <field name="description">Quản lý nhân sự nha khoa</field>
+            <field name="sequence">25</field>
+        </record>
+
+        <!-- Groups -->
+        <record id="group_dental_hr_manager" model="res.groups">
+            <field name="name">Quản lý nhân sự nha khoa</field>
+            <field name="category_id" ref="module_category_dental_hr"/>
+            <field name="implied_ids" eval="[(4, ref('hr.group_hr_manager'))]"/>
+        </record>
+        
+        <!-- Note: ir.model records are automatically created by Odoo when Python models are loaded -->
+        <!-- Do NOT manually create ir.model records here - Odoo 17 requires model names to start with 'x_' for manual creation -->
+    </data>
+</odoo>
+

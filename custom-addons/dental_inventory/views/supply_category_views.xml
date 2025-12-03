@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Supply Category Form View -->
+        <record id="view_supply_category_form" model="ir.ui.view">
+            <field name="name">dental.supply.category.form</field>
+            <field name="model">dental.supply.category</field>
+            <field name="arch" type="xml">
+                <form string="Phân loại vật tư">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" required="1"/>
+                                <field name="code"/>
+                                <field name="parent_id" options="{'no_create': True}"/>
+                            </group>
+                            <group>
+                                <field name="product_count" readonly="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Phân loại con" name="child_categories">
+                                <field name="child_ids" nolabel="1">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="code"/>
+                                        <field name="product_count" readonly="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Supply Category Tree View -->
+        <record id="view_supply_category_tree" model="ir.ui.view">
+            <field name="name">dental.supply.category.tree</field>
+            <field name="model">dental.supply.category</field>
+            <field name="arch" type="xml">
+                <tree string="Phân loại vật tư">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="parent_id"/>
+                    <field name="product_count" readonly="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Supply Category Search View -->
+        <record id="view_supply_category_search" model="ir.ui.view">
+            <field name="name">dental.supply.category.search</field>
+            <field name="model">dental.supply.category</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm phân loại vật tư">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="parent_id"/>
+                    <filter string="Có phân loại con" name="has_children" domain="[('child_ids', '!=', False)]"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Supply Category Action -->
+        <record id="action_supply_category" model="ir.actions.act_window">
+            <field name="name">Phân loại vật tư</field>
+            <field name="res_model">dental.supply.category</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Tạo phân loại vật tư mới
+                </p>
+                <p>
+                    Phân loại vật tư giúp tổ chức và quản lý vật tư nha khoa dễ dàng hơn.
+                    Bạn có thể tạo cấu trúc phân cấp (parent-child) để nhóm các vật tư liên quan.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>
+

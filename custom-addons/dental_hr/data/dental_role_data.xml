@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Dental Roles -->
+        <record id="role_doctor" model="dental.role">
+            <field name="name">Bác sĩ</field>
+            <field name="code">doctor</field>
+            <field name="description">Bác sĩ nha khoa thực hiện điều trị cho bệnh nhân</field>
+        </record>
+
+        <record id="role_technician" model="dental.role">
+            <field name="name">Kỹ thuật viên</field>
+            <field name="code">technician</field>
+            <field name="description">Kỹ thuật viên hỗ trợ bác sĩ trong quá trình điều trị</field>
+        </record>
+
+        <record id="role_receptionist" model="dental.role">
+            <field name="name">Lễ tân</field>
+            <field name="code">receptionist</field>
+            <field name="description">Lễ tân tiếp đón bệnh nhân và xử lý các thủ tục hành chính</field>
+        </record>
+
+        <record id="role_accountant" model="dental.role">
+            <field name="name">Kế toán</field>
+            <field name="code">accountant</field>
+            <field name="description">Kế toán quản lý tài chính và kế toán của phòng khám</field>
+        </record>
+
+        <record id="role_inventory_manager" model="dental.role">
+            <field name="name">Quản lý kho</field>
+            <field name="code">inventory_manager</field>
+            <field name="description">Quản lý kho vật tư nha khoa</field>
+        </record>
+    </data>
+</odoo>
+

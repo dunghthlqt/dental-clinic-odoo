@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Dental Role Tree View -->
+    <record id="view_dental_role_tree" model="ir.ui.view">
+        <field name="name">dental.role.tree</field>
+        <field name="model">dental.role</field>
+        <field name="arch" type="xml">
+            <tree string="Vai trò">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="employee_count" string="Số nhân viên"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Dental Role Form View -->
+    <record id="view_dental_role_form" model="ir.ui.view">
+        <field name="name">dental.role.form</field>
+        <field name="model">dental.role</field>
+        <field name="arch" type="xml">
+            <form string="Vai trò">
+                <header>
+                    <button name="action_view_employees" 
+                            type="object" 
+                            string="Xem nhân viên"
+                            class="oe_stat_button"
+                            icon="fa-users"
+                            invisible="employee_count == 0"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                        </group>
+                        <group>
+                            <field name="employee_count" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description" placeholder="Mô tả vai trò..."/>
+                    </group>
+                    <notebook>
+                        <page string="Nhân viên">
+                            <field name="employee_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="job_id"/>
+                                    <field name="department_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Dental Role Search View -->
+    <record id="view_dental_role_search" model="ir.ui.view">
+        <field name="name">dental.role.search</field>
+        <field name="model">dental.role</field>
+        <field name="arch" type="xml">
+            <search string="Tìm kiếm vai trò">
+                <field name="name" string="Tên vai trò"/>
+                <field name="code" string="Mã vai trò"/>
+                <filter string="Có nhân viên" name="has_employees" domain="[('employee_ids', '!=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Dental Role Action -->
+    <record id="action_dental_role" model="ir.actions.act_window">
+        <field name="name">Vai trò</field>
+        <field name="res_model">dental.role</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Chưa có vai trò nào
+            </p>
+            <p>
+                Tạo vai trò mới để phân loại nhân viên nha khoa (Bác sĩ, Kỹ thuật viên, Lễ tân, Kế toán, Quản lý kho).
+            </p>
+        </field>
+    </record>
+</odoo>
+

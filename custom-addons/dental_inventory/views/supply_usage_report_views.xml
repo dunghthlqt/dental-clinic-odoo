@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Supply Usage Report Form View -->
+        <record id="view_supply_usage_report_form" model="ir.ui.view">
+            <field name="name">dental.supply.usage.report.form</field>
+            <field name="model">dental.supply.usage.report</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo sử dụng vật tư">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="date_from" required="1"/>
+                                <field name="date_to" required="1"/>
+                            </group>
+                            <group>
+                                <field name="group_by" required="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Chi tiết báo cáo" name="report_lines">
+                                <field name="report_line_ids" readonly="1">
+                                    <tree string="Chi tiết">
+                                        <field name="name"/>
+                                        <field name="quantity" sum="Tổng"/>
+                                        <field name="unit_cost"/>
+                                        <field name="total_cost" sum="Tổng"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Tổng hợp" name="summary">
+                                <group>
+                                    <group>
+                                        <field name="total_quantity" readonly="1"/>
+                                    </group>
+                                    <group>
+                                        <field name="total_cost" readonly="1" widget="monetary"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <footer>
+                        <button string="Tạo báo cáo" 
+                                name="action_generate_report" 
+                                type="object" 
+                                class="btn-primary"/>
+                        <button string="In PDF" 
+                                name="action_print_report" 
+                                type="object" 
+                                class="btn-secondary"
+                                invisible="not report_line_ids"/>
+                        <button string="Đóng" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- Supply Usage Report Action -->
+        <record id="action_supply_usage_report" model="ir.actions.act_window">
+            <field name="name">Báo cáo sử dụng vật tư</field>
+            <field name="res_model">dental.supply.usage.report</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Tạo báo cáo sử dụng vật tư
+                </p>
+                <p>
+                    Chọn khoảng thời gian và cách nhóm dữ liệu để xem báo cáo chi tiết về việc sử dụng vật tư.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>
+

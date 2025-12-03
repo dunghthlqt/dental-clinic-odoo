@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Recurring Payments Form View -->
+    <record id="view_recurring_payments_form" model="ir.ui.view">
+        <field name="name">account.recurring.payments.form</field>
+        <field name="model">account.recurring.payments</field>
+        <field name="arch" type="xml">
+            <form string="Thanh toán Định kỳ">
+                <header>
+                    <button name="action_start_recurring" string="Bắt đầu" type="object" 
+                            class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                    <button name="action_stop_recurring" string="Dừng" type="object"
+                            invisible="state != 'running'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,running"/>
+                </header>
+                <sheet>
+                    <field name="company_id" invisible="1"/>
+                    <group>
+                        <group>
+                            <field name="name" string="Tên"/>
+                            <field name="company_id" groups="base.group_multi_company" string="Công ty"/>
+                            <field name="journal_id" string="Sổ nhật ký"/>
+                            <field name="analytic_account_id" string="Tài khoản phân tích"/>
+                        </group>
+                        <group>
+                            <field name="debit_account" string="Tài khoản Nợ"/>
+                            <field name="credit_account" string="Tài khoản Có"/>
+                            <field name="amount" string="Số tiền"/>
+                            <field name="partner_id" string="Đối tác"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="date" string="Ngày bắt đầu"/>
+                            <field name="next_date" readonly="1" string="Ngày tiếp theo"/>
+                            <field name="recurring_period" string="Chu kỳ"/>
+                            <field name="recurring_interval" string="Khoảng cách"/>
+                        </group>
+                        <group>
+                            <field name="pay_time" string="Thời điểm thanh toán"/>
+                            <field name="journal_state" string="Trạng thái bút toán"/>
+                            <field name="description" string="Mô tả" placeholder="Mô tả chi phí cố định (ví dụ: Tiền thuê mặt bằng, Lương nhân viên...)"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Các bút toán định kỳ" name="entries">
+                            <field name="recurring_lines" readonly="1">
+                                <tree>
+                                    <field name="date" string="Ngày"/>
+                                    <field name="template_name" string="Tên mẫu"/>
+                                    <field name="amount" string="Số tiền"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Recurring Payments Tree View -->
+    <record id="view_recurring_payments_tree" model="ir.ui.view">
+        <field name="name">account.recurring.payments.tree</field>
+        <field name="model">account.recurring.payments</field>
+        <field name="arch" type="xml">
+            <tree string="Thanh toán Định kỳ">
+                <field name="name" string="Tên"/>
+                <field name="amount" string="Số tiền"/>
+                <field name="recurring_period" string="Chu kỳ"/>
+                <field name="recurring_interval" string="Khoảng cách"/>
+                <field name="state" widget="badge" decoration-success="state == 'running'" decoration-info="state == 'draft'" string="Trạng thái"/>
+                <field name="date" string="Ngày bắt đầu"/>
+                <field name="next_date" string="Ngày tiếp theo"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Recurring Payments Search View -->
+    <record id="view_recurring_payments_search" model="ir.ui.view">
+        <field name="name">account.recurring.payments.search</field>
+        <field name="model">account.recurring.payments</field>
+        <field name="arch" type="xml">
+            <search string="Thanh toán Định kỳ">
+                <field name="name" string="Tên"/>
+                <field name="partner_id" string="Đối tác"/>
+                <filter string="Đang chạy" name="running" domain="[('state', '=', 'running')]"/>
+                <filter string="Nháp" name="draft" domain="[('state', '=', 'draft')]"/>
+                <group expand="0" string="Nhóm theo">
+                    <filter string="Trạng thái" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Chu kỳ" name="group_period" context="{'group_by': 'recurring_period'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Recurring Payments Action -->
+    <record id="action_recurring_payments" model="ir.actions.act_window">
+        <field name="name">Thanh toán Định kỳ</field>
+        <field name="res_model">account.recurring.payments</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_recurring_payments_search"/>
+    </record>
+</odoo>
+

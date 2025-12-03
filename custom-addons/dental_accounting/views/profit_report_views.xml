@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Profit Report Wizard Form -->
+    <record id="view_profit_report_form" model="ir.ui.view">
+        <field name="name">dental.profit.report.form</field>
+        <field name="model">dental.profit.report</field>
+        <field name="arch" type="xml">
+            <form string="Báo cáo Lợi nhuận">
+                <sheet>
+                    <group>
+                        <field name="month" string="Tháng" widget="date" options="{'datepicker': {'mode': 'range', 'type': 'month'}}"/>
+                    </group>
+                    <group>
+                        <group string="Doanh thu">
+                            <field name="revenue" readonly="1"/>
+                        </group>
+                        <group string="Chi phí">
+                            <field name="supply_cost" readonly="1"/>
+                            <field name="other_costs" readonly="1"/>
+                            <field name="salary_cost" readonly="1"/>
+                            <field name="total_cost" readonly="1"/>
+                        </group>
+                        <group string="Lợi nhuận">
+                            <field name="profit" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_print_report" 
+                            string="In báo cáo" 
+                            type="object" 
+                            class="oe_highlight"
+                            icon="fa-print"/>
+                    <button string="Đóng" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Profit Report Action -->
+    <record id="action_profit_report" model="ir.actions.act_window">
+        <field name="name">Báo cáo Lợi nhuận</field>
+        <field name="res_model">dental.profit.report</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
+

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extend HR Employee Form View -->
+    <record id="view_hr_employee_form_dental" model="ir.ui.view">
+        <field name="name">hr.employee.form.dental</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <!-- Add smart button for Salaries -->
+            <xpath expr="//div[@name='button_box'] | //div[hasclass('oe_button_box')]" position="inside">
+                <button name="action_view_salaries" 
+                        type="object" 
+                        string="Lương"
+                        class="oe_stat_button"
+                        icon="fa-money"
+                        groups="hr.group_hr_user">
+                    <field name="salary_count" widget="statinfo" string="Lần tính lương"/>
+                </button>
+                
+            </xpath>
+            
+            <!-- Add Dental Information tab -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Thông tin Nha khoa" name="dental_info" groups="hr.group_hr_user">
+                    <group>
+                        <group string="Vai trò và Chuyên môn">
+                            <field name="dental_roles" widget="many2many_tags"/>
+                            <field name="dental_specialty"/>
+                            <field name="years_of_experience"/>
+                        </group>
+                        <group string="Bằng cấp">
+                            <field name="certifications" nolabel="1" placeholder="Nhập bằng cấp và chứng chỉ..."/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Profit Report Template -->
+    <record id="report_profit_report" model="ir.actions.report">
+        <field name="name">Profit Report</field>
+        <field name="model">dental.profit.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">dental_accounting.profit_report_template</field>
+        <field name="report_file">dental_accounting.profit_report_template</field>
+    </record>
+
+    <template id="profit_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <div class="row">
+                            <div class="col-12">
+                                <h2>Báo cáo lợi nhuận</h2>
+                                <p><strong>Tháng:</strong> <t t-esc="doc.month"/></p>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Khoản mục</th>
+                                            <th class="text-right">Số tiền (VND)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Doanh thu</strong></td>
+                                            <td class="text-right"><t t-esc="'{:,.0f}'.format(doc.revenue)"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Chi phí vật tư</td>
+                                            <td class="text-right"><t t-esc="'{:,.0f}'.format(doc.supply_cost)"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Chi phí khác</td>
+                                            <td class="text-right"><t t-esc="'{:,.0f}'.format(doc.other_costs)"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Chi phí lương</td>
+                                            <td class="text-right"><t t-esc="'{:,.0f}'.format(doc.salary_cost)"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Tổng chi phí</strong></td>
+                                            <td class="text-right"><t t-esc="'{:,.0f}'.format(doc.total_cost)"/></td>
+                                        </tr>
+                                        <tr class="table-info">
+                                            <td><strong>Lợi nhuận</strong></td>
+                                            <td class="text-right"><strong><t t-esc="'{:,.0f}'.format(doc.profit)"/></strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="oe_structure"/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
+

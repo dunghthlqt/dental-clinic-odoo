@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extend Invoice Form View -->
+    <record id="view_account_move_form_dental" model="ir.ui.view">
+        <field name="name">account.move.form.dental</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <!-- Hide unnecessary buttons: Ghi nhận thanh toán, Giấy báo có, Đặt lại thành nháp -->
+            <!-- Hide "Ghi nhận thanh toán" button - use ID for more specific targeting -->
+            <xpath expr="//button[@id='account_invoice_payment_btn' or @name='action_register_payment']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <!-- Hide "Giấy báo có" / Credit Note button -->
+            <xpath expr="//button[@name='action_reverse']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <!-- Hide "Đặt lại thành nháp" / Set to Draft button -->
+            <xpath expr="//button[@name='button_draft']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            
+            <!-- Replace "Gửi & in" button with "In" button that opens PDF preview -->
+            <xpath expr="//button[@name='action_invoice_sent']" position="replace">
+                <button name="action_print_invoice" 
+                        type="object" 
+                        string="In"
+                        class="oe_highlight"
+                        invisible="move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund') or state == 'cancel'"
+                        title="Xem trước và in hóa đơn"
+                        data-hotkey="p"/>
+            </xpath>
+            
+            <!-- Add dental_treatment_id field -->
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="dental_treatment_id" 
+                       options="{'no_create': True}"
+                       invisible="move_type not in ('out_invoice', 'out_receipt')"/>
+            </xpath>
+            
+            <!-- Add treatment info section after ref field -->
+            <xpath expr="//field[@name='ref']" position="after">
+                <group name="dental_treatment_info" 
+                       string="Thông tin điều trị" 
+                       invisible="not dental_treatment_id"
+                       col="4">
+                    <field name="treatment_total_cost" readonly="1"/>
+                    <field name="treatment_paid_amount" readonly="1"/>
+                    <field name="treatment_remaining" readonly="1"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Extend Invoice Tree View (optional) -->
+    <record id="view_account_move_tree_dental" model="ir.ui.view">
+        <field name="name">account.move.tree.dental</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="move_type" invisible="1"/>
+                <field name="dental_treatment_id" optional="hide" invisible="move_type not in ('out_invoice', 'out_receipt')"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+

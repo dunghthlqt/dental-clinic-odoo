@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Main Menu: Dental Accounting -->
+    <menuitem id="menu_dental_accounting_root"
+              name="Kế toán Nha khoa"
+              parent="account.menu_finance"
+              sequence="100"/>
+
+    <!-- Payment Plans Menu -->
+    <menuitem id="menu_payment_plans"
+              name="Kế hoạch Thanh toán"
+              parent="menu_dental_accounting_root"
+              action="action_payment_plan"
+              sequence="10"/>
+
+    <!-- Profit Report Menu -->
+    <menuitem id="menu_profit_report"
+              name="Báo cáo Lợi nhuận"
+              parent="menu_dental_accounting_root"
+              action="action_profit_report"
+              sequence="20"/>
+
+    <!-- Follow-up Menu -->
+    <menuitem id="menu_followup"
+              name="Theo dõi Công nợ"
+              parent="menu_dental_accounting_root"
+              action="action_account_followup"
+              groups="dental_accounting.group_dental_accountant,dental_accounting.group_dental_account_manager"
+              sequence="30"/>
+
+    <!-- Recurring Payments Menu -->
+    <menuitem id="menu_recurring_payments"
+              name="Thanh toán Định kỳ"
+              parent="menu_dental_accounting_root"
+              action="action_recurring_payments"
+              sequence="40"/>
+
+    <!-- Menu Hồ sơ điều trị cho Accountant -->
+    <menuitem id="menu_dental_treatment_accounting"
+              name="Hồ sơ điều trị"
+              parent="menu_dental_accounting_root"
+              action="action_dental_treatment_accounting"
+              groups="dental_accounting.group_dental_accountant,dental_accounting.group_dental_account_manager"
+              sequence="5"/>
+
+    <!-- Lock Dates Menu - Đặt trong Configuration → Accounting -->
+    <menuitem id="menu_lock_dates"
+              name="Khóa Ngày"
+              parent="account.account_account_menu"
+              action="action_account_lock_date"
+              groups="account.group_account_manager"
+              sequence="50"/>
+</odoo>
+

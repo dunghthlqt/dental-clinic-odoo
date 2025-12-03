@@ -43,9 +43,12 @@ Key Features:
         'views/crm_lead_views.xml',
         'views/calendar_event_views.xml',
         'views/res_partner_views.xml',
-        'views/crm_team_views.xml',
-        'wizard/assign_team_wizard_views.xml',
+        # All menus consolidated in one file to ensure correct loading order
         'views/inquiry_menus.xml',
+        # Wizard view (action/menu moved to inquiry_menus.xml)
+        'wizard/assign_team_wizard_views.xml',
+        # Force update views (must be loaded last to override any cached views)
+        'data/update_views.xml',
     ],
     'assets': {
         'web.assets_backend': [
@@ -57,5 +60,6 @@ Key Features:
     'application': True,
     'auto_install': False,
     'license': 'LGPL-3',
+    'post_init_hook': 'post_init_hook',
 }
 

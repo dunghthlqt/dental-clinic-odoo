@@ -19,21 +19,6 @@
             </field>
         </record>
 
-        <!-- Wizard Action -->
-        <record id="action_assign_team_wizard" model="ir.actions.act_window">
-            <field name="name">Gán Team cho Inquiries</field>
-            <field name="res_model">dental.inquiry.assign.team.wizard</field>
-            <field name="view_mode">form</field>
-            <field name="target">new</field>
-        </record>
-
-        <!-- Add button to menu -->
-        <menuitem id="menu_assign_team" 
-                  name="Gán Team cho Inquiries" 
-                  parent="menu_dental_inquiries_root" 
-                  action="action_assign_team_wizard"
-                  sequence="40"
-                  groups="group_dental_inquiry_manager"/>
+        <!-- Wizard Action and Menu are now defined in inquiry_menus.xml -->
     </data>
 </odoo>
-

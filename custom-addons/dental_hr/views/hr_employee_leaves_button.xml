@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extend HR Employee Form View - Add Leaves Button -->
+    <record id="view_hr_employee_form_dental_leaves" model="ir.ui.view">
+        <field name="name">hr.employee.form.dental.leaves</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="dental_hr.view_hr_employee_form_dental"/>
+        <field name="arch" type="xml">
+            <!-- Add smart button for Leaves -->
+            <xpath expr="//div[@name='button_box'] | //div[hasclass('oe_button_box')]" position="inside">
+                <button name="action_view_leaves" 
+                        type="object" 
+                        string="Nghỉ phép"
+                        class="oe_stat_button"
+                        icon="fa-calendar"
+                        groups="hr.group_hr_user">
+                    <field name="leave_count" widget="statinfo" string="Đơn nghỉ phép"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+

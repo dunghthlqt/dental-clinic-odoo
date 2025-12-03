@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Extend Stock Picking Form View -->
+        <record id="view_stock_picking_form_dental" model="ir.ui.view">
+            <field name="name">stock.picking.form.dental</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <!-- Add supplier_id field for Incoming pickings -->
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="supplier_id" 
+                           domain="[('is_company', '=', True), ('supplier_rank', '>', 0)]"
+                           invisible="picking_type_code != 'incoming'"
+                           readonly="state != 'draft'"/>
+                </xpath>
+                
+                <!-- Add smart button for dental supplies -->
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button name="%(action_dental_supplies)d" 
+                            type="action" 
+                            class="oe_stat_button" 
+                            icon="fa-medkit"
+                            invisible="dental_supply_count == 0">
+                        <field name="dental_supply_count" widget="statinfo" string="Vật tư nha khoa"/>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
+

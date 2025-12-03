@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Menu: Dental Inventory -->
+        <menuitem id="menu_dental_inventory_root"
+                  name="Dental Inventory"
+                  parent="stock.menu_stock_root"
+                  sequence="20"
+                  groups="base.group_user"/>
+
+        <!-- Sub-menu: Supply Categories -->
+        <menuitem id="menu_supply_categories"
+                  name="Phân loại vật tư"
+                  parent="menu_dental_inventory_root"
+                  action="action_supply_category"
+                  sequence="10"/>
+
+        <!-- Sub-menu: Dental Supplies -->
+        <menuitem id="menu_dental_supplies"
+                  name="Vật tư nha khoa"
+                  parent="menu_dental_inventory_root"
+                  action="action_dental_supplies"
+                  sequence="20"/>
+
+        <!-- Sub-menu: Low Stock Alert -->
+        <menuitem id="menu_low_stock_alert"
+                  name="Cảnh báo tồn kho thấp"
+                  parent="menu_dental_inventory_root"
+                  action="action_low_stock_alert"
+                  sequence="30"/>
+
+        <!-- Sub-menu: Supply Usage Report -->
+        <menuitem id="menu_supply_usage_report"
+                  name="Báo cáo sử dụng vật tư"
+                  parent="menu_dental_inventory_root"
+                  action="action_supply_usage_report"
+                  sequence="40"/>
+    </data>
+</odoo>
+

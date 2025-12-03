@@ -1,8 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
-        <!-- Inherit Partner Form View - Add inquiry link -->
-        <record id="view_partner_form_dental" model="ir.ui.view">
+    <data noupdate="0">
+        <!-- Force update views to fix external IDs -->
+        <!-- This will update views that have old external IDs in database -->
+        
+        <!-- Update res.partner view - Force update to fix external IDs -->
+        <record id="view_partner_form_dental" model="ir.ui.view" forcecreate="1">
             <field name="name">res.partner.form.dental</field>
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
@@ -22,6 +25,9 @@
                 </xpath>
             </field>
         </record>
+        
+        <!-- Menu items are defined in inquiry_menus.xml, crm_team_views.xml, and assign_team_wizard_views.xml -->
+        <!-- No need to update them here as they are created correctly in their respective files -->
     </data>
 </odoo>
 

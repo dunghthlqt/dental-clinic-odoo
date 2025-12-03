@@ -1,0 +1,8 @@
+/* Hide unallocated credit banner in account.move form view */
+/* Note: This CSS may not work perfectly as the banner is created dynamically.
+   We use a broad selector to catch info alerts that typically contain credit messages. */
+.o_form_view .alert.alert-info {
+    /* Hide info alerts that might contain credit allocation messages */
+    display: none !important;
+}
+

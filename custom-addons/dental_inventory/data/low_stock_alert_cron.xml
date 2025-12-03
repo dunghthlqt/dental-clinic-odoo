@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Cron Job: Check Low Stock Daily -->
+        <record id="ir_cron_check_low_stock" model="ir.cron">
+            <field name="name">Kiểm tra tồn kho thấp (Dental Inventory)</field>
+            <field name="model_id" ref="dental_inventory.model_dental_low_stock_alert"/>
+            <field name="state">code</field>
+            <field name="code">model.check_low_stock()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="active">True</field>
+            <field name="doall" eval="False"/>
+        </record>
+    </data>
+</odoo>
+

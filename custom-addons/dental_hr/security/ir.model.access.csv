@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_dental_role_user,dental.role.user,model_dental_role,base.group_user,1,0,0,0
+access_dental_role_manager,dental.role.manager,model_dental_role,dental_hr.group_dental_hr_manager,1,1,1,1
+access_dental_bonus_user,dental.bonus.user,model_dental_bonus,hr.group_hr_user,1,1,1,0
+access_dental_bonus_manager,dental.bonus.manager,model_dental_bonus,dental_hr.group_dental_hr_manager,1,1,1,1
+access_dental_salary_user,dental.salary.user,model_dental_salary,hr.group_hr_user,1,1,1,0
+access_dental_salary_manager,dental.salary.manager,model_dental_salary,dental_hr.group_dental_hr_manager,1,1,1,1
+

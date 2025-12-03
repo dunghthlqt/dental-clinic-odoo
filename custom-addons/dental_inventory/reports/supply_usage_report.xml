@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Supply Usage Report Action -->
+        <record id="action_report_supply_usage" model="ir.actions.report">
+            <field name="name">Báo cáo sử dụng vật tư</field>
+            <field name="model">dental.supply.usage.report</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">dental_inventory.supply_usage_report_template</field>
+            <field name="report_file">dental_inventory.supply_usage_report_template</field>
+            <!-- paperformat_id is optional, using default A4 if not specified -->
+        </record>
+
+        <!-- Supply Usage Report Template -->
+        <template id="supply_usage_report_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <div class="oe_structure"/>
+                            <div class="row">
+                                <div class="col-12">
+                                    <h2>Báo cáo sử dụng vật tư</h2>
+                                    <p>
+                                        <strong>Từ ngày:</strong> <t t-esc="doc.date_from"/>
+                                        <br/>
+                                        <strong>Đến ngày:</strong> <t t-esc="doc.date_to"/>
+                                        <br/>
+                                        <strong>Nhóm theo:</strong> 
+                                        <t t-if="doc.group_by == 'product'">Theo sản phẩm</t>
+                                        <t t-if="doc.group_by == 'category'">Theo phân loại</t>
+                                        <t t-if="doc.group_by == 'treatment'">Theo loại điều trị</t>
+                                        <t t-if="doc.group_by == 'month'">Theo tháng</t>
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="row mt-4">
+                                <div class="col-12">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Tên</th>
+                                                <th class="text-right">Số lượng</th>
+                                                <th class="text-right">Đơn giá TB</th>
+                                                <th class="text-right">Tổng chi phí</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="doc.report_line_ids" t-as="line">
+                                                <tr>
+                                                    <td><t t-esc="line.name"/></td>
+                                                    <td class="text-right"><t t-esc="'{:,.0f}'.format(line.quantity)"/></td>
+                                                    <td class="text-right"><t t-esc="'{:,.0f}'.format(line.unit_cost)"/> VND</td>
+                                                    <td class="text-right"><t t-esc="'{:,.0f}'.format(line.total_cost)"/> VND</td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr style="font-weight: bold;">
+                                                <td>Tổng cộng</td>
+                                                <td class="text-right"><t t-esc="'{:,.0f}'.format(doc.total_quantity)"/></td>
+                                                <td></td>
+                                                <td class="text-right"><t t-esc="'{:,.0f}'.format(doc.total_cost)"/> VND</td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
+

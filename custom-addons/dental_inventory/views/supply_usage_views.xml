@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Extend Supply Usage View in Treatment Session - For Receptionist Group -->
+        <record id="view_treatment_session_form_supply_usage_receptionist" model="ir.ui.view">
+            <field name="name">treatment.session.form.supply.usage.receptionist</field>
+            <field name="model">treatment.session</field>
+            <field name="inherit_id" ref="dental_clinic_management.view_treatment_session_form"/>
+            <field name="arch" type="xml">
+                <!-- Replace supply_code and name with product_id for receptionist group -->
+                <!-- Use groups attribute to identify the page, not string -->
+                <xpath expr="//page[@groups='dental_clinic_management.group_dental_receptionist']/field[@name='supply_ids']/tree" position="replace">
+                    <tree editable="bottom">
+                        <field name="product_id" 
+                               widget="many2one"
+                               domain="[('is_dental_supply', '=', True)]"
+                               context="{'default_is_dental_supply': True, 'search_default_dental_supplies': 1}"
+                               options="{'no_create': True}"
+                               required="1"/>
+                        <field name="quantity" required="1"/>
+                        <field name="unit_cost" readonly="1"/>
+                        <field name="total_cost" readonly="1"/>
+                        <field name="notes"/>
+                    </tree>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Extend Supply Usage View in Treatment Session - For Technician Group -->
+        <record id="view_treatment_session_form_supply_usage_technician" model="ir.ui.view">
+            <field name="name">treatment.session.form.supply.usage.technician</field>
+            <field name="model">treatment.session</field>
+            <field name="inherit_id" ref="dental_clinic_management.view_treatment_session_form"/>
+            <field name="arch" type="xml">
+                <!-- Replace supply_code and name with product_id for technician group -->
+                <!-- Use groups attribute to identify the page, not string -->
+                <xpath expr="//page[@groups='dental_clinic_management.group_dental_technician']/field[@name='supply_ids']/tree" position="replace">
+                    <tree editable="bottom">
+                        <field name="product_id" 
+                               widget="many2one"
+                               domain="[('is_dental_supply', '=', True)]"
+                               context="{'default_is_dental_supply': True, 'search_default_dental_supplies': 1}"
+                               options="{'no_create': True}"
+                               required="1"/>
+                        <field name="quantity" required="1"/>
+                        <field name="unit_cost" readonly="1"/>
+                        <field name="total_cost" readonly="1"/>
+                        <field name="notes"/>
+                    </tree>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Extend Supply Usage View in Treatment Form (from dental_treatment_views.xml) -->
+        <record id="view_treatment_form_supply_usage" model="ir.ui.view">
+            <field name="name">dental.treatment.form.supply.usage</field>
+            <field name="model">dental.treatment</field>
+            <field name="inherit_id" ref="dental_clinic_management.view_dental_treatment_form"/>
+            <field name="arch" type="xml">
+                <!-- Replace supply_code and name with product_id in treatment form -->
+                <!-- Find the page that contains supply_ids field (without using string attribute) -->
+                <xpath expr="//field[@name='supply_ids'][ancestor::page]/tree" position="replace">
+                    <tree editable="bottom" create_text="Thêm vật tư">
+                        <field name="product_id" 
+                               widget="many2one"
+                               domain="[('is_dental_supply', '=', True)]"
+                               context="{'default_is_dental_supply': True, 'search_default_dental_supplies': 1}"
+                               options="{'no_create': True}"
+                               required="1"/>
+                        <field name="quantity" required="1"/>
+                        <field name="unit_cost" readonly="1"/>
+                        <field name="total_cost" readonly="1"/>
+                        <field name="notes"/>
+                    </tree>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Supply Usage Form View (Standalone) -->
+        <record id="view_supply_usage_form" model="ir.ui.view">
+            <field name="name">supply.usage.form</field>
+            <field name="model">supply.usage</field>
+            <field name="arch" type="xml">
+                <form string="Vật tư sử dụng">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="session_id" readonly="1"/>
+                                <field name="product_id" 
+                                       domain="[('is_dental_supply', '=', True)]"
+                                       context="{'default_is_dental_supply': True, 'search_default_dental_supplies': 1}"
+                                       options="{'no_create': True, 'no_open': True}"
+                                       required="1"
+                                       placeholder="Tìm kiếm vật tư..."/>
+                            </group>
+                            <group>
+                                <field name="quantity" required="1"/>
+                                <field name="unit_cost" readonly="1"/>
+                                <field name="total_cost" readonly="1"/>
+                                <field name="stock_move_id" readonly="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="notes" placeholder="Ghi chú..."/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Supply Usage Tree View -->
+        <record id="view_supply_usage_tree" model="ir.ui.view">
+            <field name="name">supply.usage.tree</field>
+            <field name="model">supply.usage</field>
+            <field name="arch" type="xml">
+                <tree string="Vật tư sử dụng">
+                    <field name="session_id"/>
+                    <field name="product_id"/>
+                    <field name="quantity"/>
+                    <field name="unit_cost"/>
+                    <field name="total_cost"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>

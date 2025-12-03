@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- Demo Supplier -->
+        <record id="demo_supplier_abc" model="res.partner">
+            <field name="name">Công ty Vật tư Nha khoa ABC</field>
+            <field name="is_company" eval="True"/>
+            <field name="supplier_rank" eval="1"/>
+            <field name="company_type">company</field>
+        </record>
+
+        <!-- Demo Dental Supplies -->
+        <record id="demo_product_composite_a2" model="product.product">
+            <field name="name">Composite A2</field>
+            <field name="is_dental_supply" eval="True"/>
+            <field name="type">product</field>
+            <field name="tracking">none</field>
+            <field name="supply_category_id" ref="supply_category_filling_composite"/>
+            <field name="min_stock_level" eval="10.0"/>
+            <field name="standard_price" eval="50000.0"/>
+            <field name="sale_ok" eval="False"/>
+            <field name="purchase_ok" eval="True"/>
+        </record>
+
+        <record id="demo_product_lidocaine" model="product.product">
+            <field name="name">Gây tê Lidocaine</field>
+            <field name="is_dental_supply" eval="True"/>
+            <field name="type">product</field>
+            <field name="tracking">none</field>
+            <field name="supply_category_id" ref="supply_category_medications_anesthesia"/>
+            <field name="min_stock_level" eval="5.0"/>
+            <field name="standard_price" eval="30000.0"/>
+            <field name="sale_ok" eval="False"/>
+            <field name="purchase_ok" eval="True"/>
+        </record>
+    </data>
+</odoo>
+

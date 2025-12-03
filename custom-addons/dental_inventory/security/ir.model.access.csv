@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_dental_supply_category_user,dental.supply.category.user,model_dental_supply_category,group_dental_inventory_user,1,1,1,0
+access_dental_supply_category_manager,dental.supply.category.manager,model_dental_supply_category,group_dental_inventory_manager,1,1,1,1
+access_supply_usage_inventory_user,supply.usage.inventory.user,model_supply_usage,group_dental_inventory_user,1,1,1,0
+access_supply_usage_inventory_manager,supply.usage.inventory.manager,model_supply_usage,group_dental_inventory_manager,1,1,1,1
+access_low_stock_alert_user,dental.low.stock.alert.user,model_dental_low_stock_alert,group_dental_inventory_user,1,1,1,0
+access_low_stock_alert_manager,dental.low.stock.alert.manager,model_dental_low_stock_alert,group_dental_inventory_manager,1,1,1,1
+access_supply_usage_report_user,dental.supply.usage.report.user,model_dental_supply_usage_report,group_dental_inventory_user,1,0,1,0
+access_supply_usage_report_manager,dental.supply.usage.report.manager,model_dental_supply_usage_report,group_dental_inventory_manager,1,0,1,0
+access_supply_usage_report_line_user,dental.supply.usage.report.line.user,model_dental_supply_usage_report_line,group_dental_inventory_user,1,0,0,0
+access_supply_usage_report_line_manager,dental.supply.usage.report.line.manager,model_dental_supply_usage_report_line,group_dental_inventory_manager,1,0,0,0
+

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Low Stock Alert Tree View -->
+        <record id="view_low_stock_alert_tree" model="ir.ui.view">
+            <field name="name">dental.low.stock.alert.tree</field>
+            <field name="model">dental.low.stock.alert</field>
+            <field name="arch" type="xml">
+                <tree string="Cảnh báo tồn kho thấp" decoration-danger="not is_resolved">
+                    <field name="product_id"/>
+                    <field name="qty_available"/>
+                    <field name="min_stock_level"/>
+                    <field name="is_resolved"/>
+                    <field name="resolved_date"/>
+                    <field name="resolved_by"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Low Stock Alert Form View -->
+        <record id="view_low_stock_alert_form" model="ir.ui.view">
+            <field name="name">dental.low.stock.alert.form</field>
+            <field name="model">dental.low.stock.alert</field>
+            <field name="arch" type="xml">
+                <form string="Cảnh báo tồn kho thấp">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="product_id" readonly="1"/>
+                                <field name="qty_available" readonly="1"/>
+                                <field name="min_stock_level" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="is_resolved"/>
+                                <field name="resolved_date" readonly="1"/>
+                                <field name="resolved_by" readonly="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="Đánh dấu đã xử lý" 
+                                name="action_resolve" 
+                                type="object" 
+                                class="btn-primary"
+                                invisible="is_resolved"/>
+                        <button string="Đóng" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- Low Stock Alert Action -->
+        <record id="action_low_stock_alert" model="ir.actions.act_window">
+            <field name="name">Cảnh báo tồn kho thấp</field>
+            <field name="res_model">dental.low.stock.alert</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('is_resolved', '=', False)]</field>
+            <field name="context">{'search_default_unresolved': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Không có cảnh báo tồn kho thấp
+                </p>
+                <p>
+                    Cảnh báo sẽ tự động được tạo khi vật tư có tồn kho dưới mức tối thiểu.
+                </p>
+            </field>
+        </record>
+
+        <!-- Low Stock Alert Search View -->
+        <record id="view_low_stock_alert_search" model="ir.ui.view">
+            <field name="name">dental.low.stock.alert.search</field>
+            <field name="model">dental.low.stock.alert</field>
+            <field name="arch" type="xml">
+                <search string="Cảnh báo tồn kho thấp">
+                    <field name="product_id"/>
+                    <filter string="Chưa xử lý" name="unresolved" domain="[('is_resolved', '=', False)]"/>
+                    <filter string="Đã xử lý" name="resolved" domain="[('is_resolved', '=', True)]"/>
+                    <group expand="0" string="Nhóm theo">
+                        <filter string="Sản phẩm" name="group_product" context="{'group_by': 'product_id'}"/>
+                        <filter string="Trạng thái" name="group_resolved" context="{'group_by': 'is_resolved'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+    </data>
+</odoo>
+

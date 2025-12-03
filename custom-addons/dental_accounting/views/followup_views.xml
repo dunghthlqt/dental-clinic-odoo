@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Follow-up Line Form View -->
+    <record id="view_followup_line_form" model="ir.ui.view">
+        <field name="name">followup.line.form</field>
+        <field name="model">followup.line</field>
+        <field name="arch" type="xml">
+            <form string="Bước Theo dõi">
+                <sheet>
+                    <group>
+                        <field name="name" string="Tên hành động"/>
+                        <field name="sequence" string="Thứ tự"/>
+                        <field name="delay" string="Số ngày quá hạn"/>
+                        <field name="followup_id" invisible="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Follow-up Form View -->
+    <record id="view_account_followup_form" model="ir.ui.view">
+        <field name="name">account.followup.form</field>
+        <field name="model">account.followup</field>
+        <field name="arch" type="xml">
+            <form string="Theo dõi Công nợ">
+                <h1>
+                    <field name="name"/>
+                </h1>
+                <label for="company_id" groups="base.group_multi_company"/>
+                <field name="company_id" options="{'no_create': True}"
+                       class="oe_inline" groups="base.group_multi_company"/>
+                <p class="oe_grey">
+                    Để nhắc nhở khách hàng thanh toán hóa đơn, bạn có thể
+                    định nghĩa các hành động khác nhau tùy thuộc vào mức độ
+                    quá hạn của khách hàng. Các hành động này được nhóm
+                    thành các mức theo dõi được kích hoạt khi ngày đến hạn
+                    của hóa đơn đã vượt quá một số ngày nhất định.
+                    <strong>Lưu ý:</strong> Chỉ áp dụng cho các dịch vụ trả góp (dịch vụ dài ngày).
+                </p>
+                <field name="followup_line_ids">
+                    <tree string="Các bước theo dõi" editable="bottom" create_text="Thêm bước theo dõi">
+                        <field name="sequence" widget="handle" string="Thứ tự"/>
+                        <field name="name" string="Tên hành động" required="1"/>
+                        <field name="delay" string="Số ngày quá hạn" required="1"/>
+                    </tree>
+                </field>
+            </form>
+        </field>
+    </record>
+
+    <!-- Follow-up Tree View -->
+    <record id="view_account_followup_tree" model="ir.ui.view">
+        <field name="name">account.followup.tree</field>
+        <field name="model">account.followup</field>
+        <field name="arch" type="xml">
+            <tree string="Theo dõi Công nợ">
+                <field name="company_id" string="Công ty"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Follow-up Action -->
+    <record id="action_account_followup" model="ir.actions.act_window">
+        <field name="name">Theo dõi Công nợ</field>
+        <field name="res_model">account.followup</field>
+        <field name="view_mode">tree,form</field>
+        <field name="groups_id" eval="[(4, ref('dental_accounting.group_dental_accountant')), (4, ref('dental_accounting.group_dental_account_manager'))]"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Tạo cấu hình theo dõi công nợ
+            </p>
+            <p>
+                Để nhắc nhở khách hàng thanh toán hóa đơn, bạn có thể định nghĩa các hành động khác nhau 
+                tùy thuộc vào mức độ quá hạn của khách hàng. Các hành động này được nhóm thành các mức 
+                theo dõi được kích hoạt khi ngày đến hạn của hóa đơn đã vượt quá một số ngày nhất định.
+            </p>
+            <p>
+                <strong>Lưu ý:</strong> Chỉ áp dụng cho các dịch vụ trả góp (dịch vụ dài ngày).
+            </p>
+        </field>
+    </record>
+</odoo>
+
